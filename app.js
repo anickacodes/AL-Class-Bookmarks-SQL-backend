@@ -5,6 +5,7 @@ app.use(cors())
 app.use(express.json())
 
 app.use("/bookmarks", require("./controllers/bookmarks.js"))
+app.use("/reviews", require("./controllers/reviews.js"))
 
 app.get("/", (req, resp) => {
     resp.status(200).send('<h1>Welcome To Bookmarks App Deux</h1>')
