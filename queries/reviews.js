@@ -1,12 +1,26 @@
 const db = require("../database/databaseConfig.js")
 
-const getAllReviews = async () => {
-    try {
-        const allReviews = await db.any('SELECT * FROM reviews')
-        return allReviews
-    } catch(error) {
-        return error
+const getAllReviews = async (bookmarkId=false) => {
+    if(bookmarkId){
+        try {
+            const allReviews = await db.any(
+            "SELECT * FROM reviews WHERE bookmark_id=$1",
+            bookmarkId
+            );
+            return allReviews;
+            } catch (err) {
+            return err;
+            }
     }
+    else{
+        try {
+            const allReviews = await db.any('SELECT * FROM reviews')
+            return allReviews
+        } catch(error) {
+            return error
+        }
+    }
+
 }
 
 const getOneReview = async (idValue) => {

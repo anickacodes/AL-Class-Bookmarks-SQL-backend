@@ -2,6 +2,10 @@ const express = require("express")
 const router = express.Router()
 const { getAllBookmarks, getOneBookmark, createBookmark, deleteBookmark, updateBookmark } = require("../queries/bookmarks.js")
 const { checkName, checkBoolean, validateURL } = require("../validations/checkBookmarks.js")
+// import reviewsController file into this file to us /bookmarks/:id/reviews
+const reviewsController = require("./reviews.js")
+router.use("/:bookmarkId/reviews", reviewsController)
+
 
 // cannot use 'await' keyword unless inside of an 'async' function
 router.get("/", async (req, resp) => {
@@ -14,9 +18,9 @@ router.get("/", async (req, resp) => {
 })
 
 // SHOW (get one bookmark)
-router.get("/:id", async (req, resp) => {
-    const { id } = req.params;
-    const bookmark = await getOneBookmark(id);
+router.get("/:bookmarkId", async (req, resp) => {
+    const { bookmarkId } = req.params;
+    const bookmark = await getOneBookmark(bookmarkId);
     // get one bookmark will always return something so bookmark will always have a value, check for a certain key value instead
     if (bookmark.id) {
       resp.json(bookmark);
@@ -37,17 +41,17 @@ router.post("/", checkName, checkBoolean, validateURL, async (req, resp) =>{
 })
 
 // DELETE ROUTE
-router.delete("/:id", async (req, resp) => {
-    const {id} = req.params
-    const deletedBookmark = await deleteBookmark(id)
+router.delete("/:bookmarkId", async (req, resp) => {
+    const {bookmarkId} = req.params
+    const deletedBookmark = await deleteBookmark(bookmarkId)
     
     deletedBookmark.id ? resp.status(200).json(deletedBookmark) : resp.status(404).json({Error: "Bookmark Not Found"})
 })
 
 // UPDATE EDIT PUT ROUTE
-router.put("/:id", checkName, checkBoolean, validateURL, async (req, resp) => {
-    const {id} = req.params
-    const updatedBookmark = await updateBookmark(id, req.body)
+router.put("/:bookmarkId", checkName, checkBoolean, validateURL, async (req, resp) => {
+    const {bookmarkId} = req.params
+    const updatedBookmark = await updateBookmark(bookmarkId, req.body)
     
     updatedBookmark.id ? resp.status(200).json(updatedBookmark) : resp.status(404).json({Error: "bookmark not found"})
 })

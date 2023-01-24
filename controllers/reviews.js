@@ -1,12 +1,29 @@
 const express = require("express")
-const router = express.Router()
+const router = express.Router({ mergeParams: true })
+// merge Parameters from bookmarks and reviews route from url -> access to all parameter variables from all routes in server (:id, from bookmarks, :review_id)
+// const reviews = express.Router({ mergeParams: true });
 const { getAllReviews, getOneReview, createReview, deleteReview, updateReview } = require("../queries/reviews.js")
 
-router.get("/", async (req, resp) => {
-    const allReviews = await getAllReviews()
+// reviews merge parameter routing
+
+router.get("/", async (req, res) => {
+    const { bookmarkId } = req.params;
+  
+    try {
+      const allReviews = await getAllReviews(bookmarkId);
+      res.json(allReviews);
+    } catch (err) {
+      res.json(err);
+    }
+  });
+
+// router.get("/", async (req, resp) => {
+//     // code to get all Reviews
+//     const allReviews = await getAllReviews()
     
-    allReviews[0] ? resp.status(200).json(allReviews) : resp.status(500).json({error: "server error"})
-})
+//     allReviews[0] ? resp.status(200).json(allReviews) : resp.status(500).json({error: "server error"})
+     
+// })
 
 router.get("/:id", async (req, resp) => {
     const {id} = req.params
