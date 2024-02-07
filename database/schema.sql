@@ -1,7 +1,7 @@
-DROP DATABASE IF EXISTS bookmarks_dev;
-CREATE DATABASE bookmarks_dev;
+DROP DATABASE IF EXISTS destbookmarkpost;
+CREATE DATABASE destbookmarkpost;
 
-\c bookmarks_dev;
+\c destbookmarkpost;
 
 CREATE TABLE bookmarks (
  id SERIAL PRIMARY KEY,

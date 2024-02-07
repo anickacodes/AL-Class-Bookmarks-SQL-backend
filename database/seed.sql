@@ -1,4 +1,4 @@
-\c bookmarks_dev;
+\c destbookmarkpost;
 
 INSERT INTO bookmarks (name, url, category, is_favorite) VALUES
 ('MDN', 'https://developer.mozilla.org/en-US/', 'educational', true),
