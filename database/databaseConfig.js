@@ -14,6 +14,7 @@ const cn = {
     port: process.env.PG_PORT,
     database: process.env.PG_DATABASE,
     user: process.env.PG_USER,
+    password: process.env.PG_PASSWORD
   };
   
 // db is connection between postgres and our database bookmarks_dev (.env variable PG_DATABASE)
