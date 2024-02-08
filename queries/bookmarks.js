@@ -29,7 +29,7 @@ const getAllBookmarks = async (name) => {
 
     if (name) {
       allBookmarks = await db.any(
-        `SELECT * FROM bookmarks where name LIKE $1, '%{name}%'`
+        "SELECT * FROM bookmarks where name LIKE $1, `%{name}%`"
       );
     } else {
       allBookmarks = await db.any("SELECT * FROM bookmarks");
